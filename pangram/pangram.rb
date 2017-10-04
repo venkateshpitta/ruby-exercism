@@ -6,6 +6,6 @@ require 'set'
 
 class Pangram
   def self.pangram?(given)
-    Set.new(given.gsub(/\p{^Alpha}/, '').downcase.split("")).length == 26
+    Set.new(given.gsub(/\p{^Alpha}/, '').downcase.chars).length == 26
   end
 end
