@@ -1,22 +1,25 @@
 module BookKeeping; VERSION = 1; end;
 
 class Prime
-  def self.is_prime? (knowns, n)
-    knowns.all? {|i| n%i != 0}
+
+  @primes = [2]
+
+  def self.is_prime? (n)
+    @primes.all? {|i| n%i != 0}
   end
 
-  def self.get_more_primes(knowns)
-    a = knowns[-1]
-    knowns.push([*a..a**2].select {|i| i.odd? and is_prime? knowns, i})
-    knowns.flatten
+  def self.get_more_primes
+    a = @primes[-1]
+    @primes.push([*a..a*2].select {|i| i.odd? and is_prime? i})
+    @primes = @primes.flatten
   end
 
   def self.nth(n)
-    if n < 1 then raise ArgumentError, "Cannot be smaller than 1" end
-    primes = [2]
-    while primes.length <= n do
-      primes = get_more_primes(primes)
+    fail ArgumentError, "No one knows to calculate #{n}th prime yet.  Let us start at 1 or higher." if n < 1
+    while @primes.length <= n do
+      get_more_primes
     end
-    primes[n-1]
+    @primes[n-1]
   end
+
 end
